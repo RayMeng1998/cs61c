@@ -15,13 +15,13 @@ unsigned get_bit(unsigned x,
 void set_bit(unsigned * x,
              unsigned n,
              unsigned v) {
-    return (*x & ~(1 << n)) | ((v << n));
+    *x = (*x & ~(1 << n)) | ((v << n));
 }
 // Flip the nth bit of the value of x.
 // Assume 0 <= n <= 31
 void flip_bit(unsigned * x,
               unsigned n) {
-    return (*x ^ (1 << n));
+    *x = (*x ^ (1 << n));
 }
 
 
