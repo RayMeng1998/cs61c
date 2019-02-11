@@ -4,7 +4,8 @@
 #include <string.h>
 
 void lfsr_calculate(uint16_t *reg) {
-    /* YOUR CODE HERE */
+    *reg = *reg >> 1;
+    set_bit(*reg, 31, 1);
 }
 
 int main() {
