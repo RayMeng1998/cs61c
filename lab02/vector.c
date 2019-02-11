@@ -58,7 +58,7 @@ vector_t *vector_new() {
     vector_t *retval;
 
     /* First, we need to allocate memory on the heap for the struct */
-    retval -> data = malloc(sizeof(int));
+    retval = malloc(sizeof(int));
 
     /* Check our return value to make sure we got memory */
     if (retval -> data == NULL) {
@@ -69,7 +69,7 @@ vector_t *vector_new() {
        Since retval->data should be able to dynamically grow,
        what do you need to do? */
     retval->size = 1;
-    retval->data = malloc(retval -> size * sizeof(int));
+    retval->data = malloc(sizeof(int));
 
     /* Check the data attribute of our vector to make sure we got memory */
     if (retval -> data == NULL) {
@@ -106,10 +106,7 @@ int vector_get(vector_t *v, size_t loc) {
 /* Free up the memory allocated for the passed vector.
    Remember, you need to free up ALL the memory that was allocated. */
 void vector_delete(vector_t *v) {
-    int i;
-    for (int i = 0; i < v -> size; i++) {
-      free(v -> data[i]);
-    }
+    free(v -> data);
     free(v);
 }
 
@@ -124,13 +121,17 @@ void vector_set(vector_t *v, size_t loc, int value) {
       v -> data[loc] = value;
     } else {
       vector_t *retval;
-      *retval = *v;
-      v -> data = malloc(loc * sizeof(int));
+      retval -> data = malloc((loc + 1) * sizeof(int));
       int i;
-      for (i = 0; i < loc; i++) {
+      for (i = 0; i < v -> size; i++) {
+        retval -> data[i] = v -> data[i];
+      }
+      int j;
+      v -> size = loc + 1;
+      for (j = 0; j < loc + 1; j++) {
         v -> data[i] = retval -> data[i];
       }
       v -> data[loc] = value;
-      vector_delete(*retval);
+      vector_delete(retval);
     }
 }
