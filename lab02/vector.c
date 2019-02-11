@@ -62,6 +62,7 @@ vector_t *vector_new() {
 
     /* Check our return value to make sure we got memory */
     if (retval -> data == NULL) {
+        free(retval);
         allocation_failed();
     }
 
@@ -121,15 +122,17 @@ void vector_set(vector_t *v, size_t loc, int value) {
       v -> data[loc] = value;
     } else {
       vector_t *retval;
-      retval -> data = malloc((loc + 1) * sizeof(int));
+      retval = malloc(sizeof(int));
+      retval -> data = calloc((loc + 1), sizeof(int));
       int i;
       for (i = 0; i < v -> size; i++) {
         retval -> data[i] = v -> data[i];
       }
       int j;
       v -> size = loc + 1;
+      v -> data = calloc((loc + 1), sizeof(int));
       for (j = 0; j < loc + 1; j++) {
-        v -> data[i] = retval -> data[i];
+        v -> data[j] = retval -> data[j];
       }
       v -> data[loc] = value;
       vector_delete(retval);
