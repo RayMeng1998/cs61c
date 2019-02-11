@@ -69,7 +69,7 @@ vector_t *vector_new() {
        Since retval->data should be able to dynamically grow,
        what do you need to do? */
     retval->size = 1;
-    retval->data = malloc(sizeof(int));
+    retval->data = calloc(retval->size, sizeof(int));
 
     /* Check the data attribute of our vector to make sure we got memory */
     if (retval -> data == NULL) {
