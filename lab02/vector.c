@@ -120,5 +120,17 @@ void vector_set(vector_t *v, size_t loc, int value) {
      * allocated?  Remember that unset locations should contain a value of 0.
      */
 
-    /* YOUR SOLUTION HERE */
+    if (loc < v -> size) {
+      v -> data[loc] = value;
+    } else {
+      vector_t *retval;
+      *retval = *v;
+      v -> data = malloc(loc * sizeof(int));
+      int i;
+      for (i = 0; i < loc; i++) {
+        v -> data[i] = retval -> data[i];
+      }
+      v -> data[loc] = value;
+      vector_delete(*retval);
+    }
 }
