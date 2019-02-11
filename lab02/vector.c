@@ -61,7 +61,7 @@ vector_t *vector_new() {
     retval = malloc(sizeof(int));
 
     /* Check our return value to make sure we got memory */
-    if (retval -> data == NULL) {
+    if (retval == NULL) {
         free(retval);
         allocation_failed();
     }
